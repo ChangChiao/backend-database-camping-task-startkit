@@ -303,23 +303,23 @@ GROUP BY user_id;
     -- inner join ( 用戶王小明的已使用堂數) as "COURSE_BOOKING"
     -- on "COURSE_BOOKING".user_id = "CREDIT_PURCHASE".user_id;
 
-SELECT 
-    cp.user_id,
-    (cp.total_credit - cb.used_credit) as remaining_credit
-FROM (
-    SELECT user_id, SUM(purchased_credits) as total_credit
-    FROM "CREDIT_PURCHASE"
-    WHERE user_id = (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io')
-    GROUP BY user_id
-) as cp
-INNER JOIN (
-    SELECT user_id, COUNT(*) as used_credit
-    FROM "COURSE_BOOKING"
-    WHERE user_id = (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io')
-    AND status != '課程已取消'
-    GROUP BY user_id
-) as cb
-ON cp.user_id = cb.user_id;
+-- SELECT 
+--     cp.user_id,
+--     (cp.total_credit - cb.used_credit) as remaining_credit
+-- FROM (
+--     SELECT user_id, SUM(purchased_credits) as total_credit
+--     FROM "CREDIT_PURCHASE"
+--     WHERE user_id = (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io')
+--     GROUP BY user_id
+-- ) as cp
+-- INNER JOIN (
+--     SELECT user_id, COUNT(*) as used_credit
+--     FROM "COURSE_BOOKING"
+--     WHERE user_id = (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io')
+--     AND status != '課程已取消'
+--     GROUP BY user_id
+-- ) as cb
+-- ON cp.user_id = cb.user_id;
 
 
 -- ████████  █████   █     ███  
