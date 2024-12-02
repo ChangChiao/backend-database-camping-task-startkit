@@ -15,9 +15,9 @@
 --     5. 用戶名稱為`Q太郎`，Email 為`starplatinum@hexschooltest.io`，Role為`USER`
 --     6. 用戶名稱為 透明人，Email 為 opacity0@hexschooltest.io，Role 為 USER
 
-INSERT INTO "USER" (name, email, Role) 
+INSERT INTO "USER" (name, email, role) 
 VALUES ('李燕容', 'lee2000@hexschooltest.io', 'USER'),
-       ('王小明', 'wXlTq@hexschooltest.io;', 'USER'),
+       ('王小明', 'wXlTq@hexschooltest.io', 'USER'),
        ('肌肉棒子', 'muscle@hexschooltest.io', 'USER'),
        ('好野人', 'richman@hexschooltest.io', 'USER'),
          ('Q太郎', 'starplatinum@hexschooltest.io', 'USER'),
@@ -26,7 +26,7 @@ VALUES ('李燕容', 'lee2000@hexschooltest.io', 'USER'),
 
 -- 1-2 修改：用 Email 找到 李燕容、肌肉棒子、Q太郎，如果他的 Role 為 USER 將他的 Role 改為 COACH
 UPDATE "USER"
-SET Role = 'COACH'
+SET role = 'COACH'
 WHERE email IN ('lee2000@hexschooltest.io', 'muscle@hexschooltest.io', 'starplatinum@hexschooltest.io');
 
 -- 1-3 刪除：刪除USER 資料表中，用 Email 找到透明人，並刪除該筆資料
@@ -303,23 +303,23 @@ GROUP BY user_id;
     -- inner join ( 用戶王小明的已使用堂數) as "COURSE_BOOKING"
     -- on "COURSE_BOOKING".user_id = "CREDIT_PURCHASE".user_id;
 
--- SELECT 
---     cp.user_id,
---     (cp.total_credit - cb.used_credit) as remaining_credit
--- FROM (
---     SELECT user_id, SUM(purchased_credits) as total_credit
---     FROM "CREDIT_PURCHASE"
---     WHERE user_id = (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io')
---     GROUP BY user_id
--- ) as cp
--- INNER JOIN (
---     SELECT user_id, COUNT(*) as used_credit
---     FROM "COURSE_BOOKING"
---     WHERE user_id = (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io')
---     AND status != '課程已取消'
---     GROUP BY user_id
--- ) as cb
--- ON cp.user_id = cb.user_id;
+SELECT 
+    cp.user_id,
+    (cp.total_credit - cb.used_credit) as remaining_credit
+FROM (
+    SELECT user_id, SUM(purchased_credits) as total_credit
+    FROM "CREDIT_PURCHASE"
+    WHERE user_id = (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io')
+    GROUP BY user_id
+) as cp
+INNER JOIN (
+    SELECT user_id, COUNT(*) as used_credit
+    FROM "COURSE_BOOKING"
+    WHERE user_id = (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io')
+    AND status != '課程已取消'
+    GROUP BY user_id
+) as cb
+ON cp.user_id = cb.user_id;
 
 
 -- ████████  █████   █     ███  
