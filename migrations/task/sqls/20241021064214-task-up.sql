@@ -249,9 +249,9 @@ VALUES (
     -- 2. 狀態`status` 設定為課程已取消
 UPDATE "COURSE_BOOKING"
 SET cancelled_at = '2024-11-24 17:00:00',
-    status = '課程已取消',
-WHERE user_id = (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io'),
-AND course_id = (SELECT id FROM "COURSE" WHERE user_id = (SELECT id FROM "USER" WHERE email = 'lee2000@hexschooltest.io');
+    status = '課程已取消'
+WHERE user_id = (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io')
+AND course_id = (SELECT id FROM "COURSE" WHERE user_id = (SELECT id FROM "USER" WHERE email = 'lee2000@hexschooltest.io'));
 
 -- 5-3. 新增：`王小明`再次預約 `李燕容`   的課程，請在`COURSE_BOOKING`新增一筆資料：
     -- 1. 預約人設為`王小明`
@@ -368,4 +368,4 @@ WHERE "CREDIT_PURCHASE".purchase_at >= '2024-11-01 00:00:00' AND "CREDIT_PURCHAS
 SELECT COUNT(DISTINCT "COURSE_BOOKING".user_id) as "預約會員人數"
 FROM "COURSE_BOOKING"
 WHERE "COURSE_BOOKING".booking_at >= '2024-11-01 00:00:00' AND "COURSE_BOOKING".booking_at < '2024-12-01 00:00:00'
-and "COURSE_BOOKING".status != '課程已取消';
+AND "COURSE_BOOKING".status != '課程已取消';
